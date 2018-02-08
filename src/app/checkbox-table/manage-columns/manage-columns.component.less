@@ -1,0 +1,46 @@
+@import '../../../styles.less';
+
+.modal{
+	[mat-dialog-content]{
+		.header{
+			border-bottom: 1px solid @black;
+		}
+
+		height: 480px;
+		overflow: hidden;
+
+		.options{
+			overflow-x: auto;
+			min-height: 420px;
+
+			.option{
+				margin: 2px;
+				line-height: 25px;
+				height: 25px;
+
+				.column-name{
+					margin-left: 18px;
+				}
+
+				.material-icons{
+					line-height: 25px;
+					&.column-setting{
+						color: @row-button-hover;
+						font-size: 14px;
+						cursor: pointer;
+					}
+					&.lock-icon{
+						margin-left: 5px;
+					}
+					&.active{
+						color: @black;
+					}
+				}
+			}
+		}
+
+		.save-as-default{
+			padding-top: 10px;
+		}
+	}
+}

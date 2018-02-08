@@ -1,0 +1,8 @@
+<div class="mtc-auto-complete-dropdown-container" [ngStyle]="{'bottom': offPage +'px'}">
+	<div #dropdown class="mtc-autocomplete-dropdown" fxLayout="column">
+		<span *ngFor="let item of items; let i = index" class="item" (click)="selectItem()" (mouseenter)="currentItemIndex = i" (mouseleave)="currentItemIndex = -1"
+		[class.highlight]="(i === currentItemIndex)">
+			{{ item[displayBy] }}
+		</span>
+	</div>
+</div>

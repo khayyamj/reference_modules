@@ -1,0 +1,140 @@
+@import '../../../styles.less';
+
+@spacing: 0px;
+@icon-width: 30px;
+@header-height: 40px;
+
+.vertical-center (@height) {
+	height: @height;
+	line-height: @height !important;
+	display: inline-block;
+	vertical-align: middle;
+}
+.border-box {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+.mini-calendar-component {
+	float: left;
+	display: block;
+	.border-box;
+	background: @white;
+	width: 198px;
+	padding-bottom: 4px;
+
+
+	div.header {
+		width: 100%;
+		background: @white;
+		height: @header-height;
+		color: @accent-blue;
+
+		.chevron-button {
+			background-color: transparent;
+			border: none;
+			color: @accent-blue;
+			padding: 0px;
+			margin: 0px;
+			cursor: pointer;
+			:hover {
+				color: @action-orange;
+			}
+
+			i {
+				margin-top: 8px;
+			}
+		}
+
+		.chevron-button:focus {
+			outline: none;
+		}
+
+		>* {
+			.vertical-center(@header-height);
+		}
+
+		>i {
+			float: left;
+			width: @icon-width;
+			font-weight: bold;
+			position: relative;
+			.border-box;
+			padding: 0 @spacing;
+			cursor: pointer;
+		}
+
+		>span {
+			font-weight: bold;
+			text-transform: uppercase;
+			.border-box;
+			padding-left: @icon-width+@spacing;
+			text-align: center;
+			padding-right: @icon-width;
+			color: inherit;
+		}
+	}
+	>div.week {
+		float: left;
+		width: 100%;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		>span.day {
+			float: left;
+			width: 28px;
+			.border-box;
+			font-size: 0.75em;
+			text-align: center;
+			.vertical-center(28px);
+			background: @white;
+			cursor: pointer;
+			color: @black;
+			&.abbreviation {
+				color: @accent-blue
+			}
+
+			&:first-child {
+				border-left: none;
+			}
+
+			&.today {
+				background: @off-white;
+				font-weight: bold;
+			}
+
+			&.different-month {
+				color: @light-grey;
+			}
+
+			&.selected {
+				background: @accent-blue !important;
+				color: @white !important;
+			}
+
+			&[side="left"], &[side = "both"] {
+				border-bottom-left-radius: 50%;
+				border-top-left-radius: 50%;
+				background: @off-white;
+			}
+
+			&[side="right"], &[side = "both"] {
+				border-bottom-right-radius: 50%;
+				border-top-right-radius: 50%;
+				background: @off-white;
+			}
+
+			&[side="in-range"] {
+				background: lighten(@accent-blue, 32%);
+			}
+
+			&.disabled {
+				background: @off-white;
+				color: @light-grey;
+				cursor: text;
+				border-radius: 0;
+			}
+		}
+	}
+}

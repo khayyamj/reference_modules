@@ -1,0 +1,280 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Color Variables (from Style Guide) */
+@white:#FFFFFF;
+@off-white: #F3F3F3;
+@transparent-white: rgba(255, 255, 255, .6);
+@translucent-black: rgba(0, 0, 0, 0.4);
+
+@mtc-blue: #4D6594;
+@accent-blue: #43B2E5;
+@action-orange: #F2813A;
+
+@black: #221E1F;
+@charcoal: #4A4A4A;
+@green: #51BC95;
+@light-green: #96E2C7;
+@grey: #E6E6E6;
+@light-grey: #A7A8AB;
+@blue-grey: #A6B2C9;
+@red: #EF5458;
+@light-red: #FFA4A6;
+@purple: #7F6DB0;
+@light-purple: #B2A4D8;
+@yellow: #FFC600;
+@light-yellow: #FFE380;
+
+@row-hover: @off-white;
+@top-button-hover: @off-white;
+@row-button-hover: @grey;
+@background-grey: @off-white;
+@natural:  @off-white;
+@success: @green;
+@error: @red;
+@warning: @yellow;
+@text-color: @charcoal;
+
+@font-family: 'Open Sans';
+@heading-font-size: 18px;
+@subheading-font-size: 16px;
+@paragraph-font-size: 14px;
+@font-weight-regular: 400;
+@font-weight-semi-bold: 600;
+@font-weight-bold: 800;
+
+//default button colors
+@button-default: @light-grey;
+@button-default-hover: #888888;
+@button-default-disabled: #d7d7d7;
+//flat button colors
+@button-flat-hover: @off-white;
+//primary action button colors
+@button-primary: @action-orange;
+@button-primary-hover: #E8742B;
+@button-primary-disabled: lighten(@button-primary, 25%);
+//secondary action button colors
+@button-secondary: @light-grey;
+@button-secondary-hover: #909297;
+@button-secondary-disabled: lighten(@button-secondary, 25%);
+//navigation button colors
+@button-navigation: @mtc-blue;
+@button-navigation-hover: #3B527E;
+@button-navigation-disabled: lighten(@button-navigation, 25%);
+
+
+@z-index-highest: 1010;
+@z-index-level-1: 10;
+@z-index-level-2: 20;
+
+.error{
+	border-color: @red;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.mat-dialog-container{
+	padding: 0px !important;
+	overflow: inherit !important;
+}
+
+simple-confirmation{
+	box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+}
+
+.modal {
+	padding: 20px;
+	overflow: hidden;
+
+	.modal-header {
+		.mat-dialog-title {
+			font-size: 16px;
+			font-weight: 600;
+			text-transform: uppercase;
+		}
+		.modal-exit-button {
+			margin-bottom: 20px;
+			background-color: transparent;
+			color: @black;
+			text-transform: none;
+			border: none;
+			&:hover {
+				background-color:transparent;
+			}
+		}
+		h1,h2,h3,h4,h5,h6,p,pre {
+			font-size: @subheading-font-size;
+			font-weight: @font-weight-semi-bold;
+			text-transform: uppercase;
+			font-family: @font-family;
+		}
+	}
+	.mat-dialog-content {
+		display: flex;
+		max-height: 72vh;
+	}
+	.modal-buttons {
+		display: flex;
+		justify-content: flex-end;
+
+		.mat-button {
+			color: @off-white;
+			line-height: initial;
+			margin-left: 0px;
+			margin-right: 5px;
+			height: 30px;
+			&:last-child{
+				margin-right: 0;
+			}
+		}
+
+		.modal-primary-button {
+			background-color:@action-orange;
+			font-family: Open Sans;
+			font-weight: 600 ;
+		}
+
+		.modal-secondary-button {
+			background-color: @light-grey;
+			font-family: Open Sans;
+			font-weight: 600 ;
+		}
+
+		.mat-dialog-actions {
+			padding: 12px 0;
+		}
+
+		.mat-button-focus-overlay{
+			height: inherit;
+		}
+	}
+
+}
+
+/* BUTTONS*/
+
+button {
+	padding: 6px 11px 8px 11px;
+	border-radius: 4px;
+	font-size: 14px;
+	font-family: @font-family;
+	text-transform: uppercase;
+	font-weight: 600;
+	border: none;
+	color: @white;
+	background-color: @button-default;
+	cursor: pointer;
+	margin: 0 5px;
+	height: 32px;
+	position: relative;
+
+	&:last-child{
+		margin-right: 0;
+	}
+
+	&:first-child{
+		margin-left: 0;
+	}
+
+	//----------BUTTON STYLES BASED ON STATE---------------
+
+	&:hover {
+		&:not(.flat-btn):not(.modal-exit-btn):not(.icon-btn){
+			box-shadow: 0px 2px 8px rgba(0, 0, 0, .25);
+		}
+	}
+
+	&:disabled {
+		background-color: @button-default-disabled;
+		cursor: not-allowed;
+	}
+
+	&:active {
+		background-color: darken(@button-default-hover,5%);
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	//----------SPECIFIC BUTTON STYLES---------------
+
+	&.flat-btn {
+		background-color: transparent;
+		color: @action-orange;
+
+		&:hover {
+			background-color: @off-white;
+		}
+	}
+
+	&.primary-btn {
+		background-color: @button-primary;
+
+		&:hover {
+			background-color: @button-primary-hover;
+		}
+	}
+
+	&.secondary-btn {
+		background-color: @button-secondary;
+
+		&:hover {
+			background-color: @button-secondary-hover;
+		}
+	}
+
+	&.navigation-btn {
+		background-color: @button-navigation;
+
+		&:hover {
+			background-color: @button-navigation-hover;
+		}
+	}
+
+	&.modal-exit-btn, &.icon-btn{
+		background-color: transparent;
+		color: @black;
+		margin: 0;
+		padding: 0;
+	}
+
+	&.number-btn {
+		padding-right: 38px; //to accommodate a minimum space for the number box
+
+		div { //the only div that should be in a number-btn contains the plain text number for a count
+			background: @off-white;
+			color: @button-navigation;
+			font-size: @subheading-font-size;
+			font-weight: @font-weight-semi-bold;
+			border-radius: 2px;
+			line-height: 22px;
+			min-width: 22px;
+			min-height: 22px;
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
+	}
+}
+
+.no-text-selection {
+	-webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.mat-input-container{
+	width: 100%;
+}

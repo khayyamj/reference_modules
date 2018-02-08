@@ -1,0 +1,121 @@
+@import '../../../styles.less';
+
+#clock-picker {
+	background-color: @white;
+	
+	.time {
+		font-size: 2.5rem;
+		cursor: pointer;
+		width: 100%;
+		text-align: center;
+
+		span{
+			color: @transparent-white;
+		}
+
+		span.active{
+			color: @white;
+		}
+
+		.meridiem{
+			padding-left: 4px;
+			font-size: 0.75rem;
+		}
+	}
+
+	.clock{
+		padding: 6px;
+		.clock-face {
+			border-radius: 105px;
+			background-color: @background-grey;
+			box-sizing: border-box;
+			height: 210px;
+			padding-bottom: 31%;
+			position: relative;
+			width: 210px;
+			
+			.clock-overlay {
+				cursor: pointer;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 100;
+				color: @black;
+			}
+			.pointer-container, .center-container {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				border-radius: 105px;
+			}
+			
+			
+			.loop(@counter) when (@counter < 61) {
+				.loop((@counter + 1));    // next iteration
+				
+				[minutes="@{counter}"] {
+					transform: rotateZ(@counter * 6deg);
+				}
+			}
+			
+			.loop(1);
+			
+			.pointer {
+				background: @accent-blue;
+				height: 35%;
+				left: 49%;
+				position: absolute;
+				top: 15%;
+				transform-origin: 50% 100%;
+				width: 2%;
+			}
+		}
+		
+		.clock-face:after {
+			background: @accent-blue;
+			border-radius: 50%;
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 5%;
+			height: 4%;
+			z-index: 10;
+		}
+	}
+	
+	.clockNumbersAlignment{
+		position: absolute;
+		width: 26px;
+		height: 21px;
+		text-align: center;
+		padding-top: 5px;
+	}
+	.highlighted {
+		background-color: @accent-blue;
+		border-radius: 20px;
+		color: @white;
+	}
+	.highlighted-dot{
+		border: 11px solid @accent-blue;
+		width: 5px !important;
+		height: 0px !important;
+		background-color: @white;
+		z-index: -1 !important;
+	}
+	.hidden{
+		display: none;
+	}
+	.no-text-selection{
+		-webkit-user-select: none; /* webkit (safari, chrome) browsers */
+		-moz-user-select: none; /* mozilla browsers */
+		-ms-user-select: none; /* IE10+ */
+		user-select: none;
+	}
+
+}

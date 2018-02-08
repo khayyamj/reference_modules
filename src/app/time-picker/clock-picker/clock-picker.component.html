@@ -1,0 +1,23 @@
+<div #clockPicker id="clock-picker">
+	<div layout="column" layout-align="center center">
+		<div class="time" [style.background-color]="color" layout="row" layout-align="center center">
+			<span [class.active]="type === 'hours'" (click)="type = 'hours'">{{_time | moment | date:'hh'}}</span><span>:</span><span [class.active]="type === 'minutes'" (click)="type = 'minutes'">{{_time | moment | date:'mm'}}</span>
+			<span (click)="changeMeridiem()" layout="column" class="meridiem">
+				<span [class.active]="isAM()">AM</span>
+				<span [class.active]="!isAM()">PM</span>
+			</span>
+		</div>
+		<span class="clock">
+			<article class="clock-face">
+				<div class="clock-overlay no-text-selection" (mousedown)="handleMouseDown()" (mouseup)="handleMouseUp()" (click)="changeTimeLocal($event)" (mousemove)="changeTimeLocal($event)">
+					<div *ngFor="let n of clockNumbers" [style.top.px]="n.topPosition" [style.left.px]="n.leftPosition" class="clockNumbersAlignment" [class.highlighted]="hoverHighlight(hoverAngle, n.minuteAngle, n.tick)" [class.hidden]="getDisplayNum(n.tick)===null" [class.highlighted-dot]="highlightedMinute">
+						{{getDisplayNum(n.tick)}}
+					</div>
+				</div>
+				<div class="pointer-container" [attr.minutes]="getRotationMinutes()">
+					<div class="pointer" [class.highlighted]="(90 - minutes*5) === hoverAngle-90"></div>
+				</div>
+			</article>
+		</span>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+<div class="mini-calendar-component noselect" #miniCalendar (mouseleave)="checkHoverDay()">
+	<div *ngIf="yearPicker" class="header" layout="row" layout-align="center center">
+		<button type="button" class="chevron-button" (click)="previousYear()"><i class="material-icons">chevron_left</i></button>
+		<span>{{month.format("YYYY")}}</span>
+		<button type="button" class="chevron-button" (click)="nextYear()"><i class="material-icons">chevron_right</i></button>
+	</div>
+	<div class="header" fxLayout="row" fxLayoutAlign="center center">
+		<button type="button" class="chevron-button" (click)="previous()"><i class="material-icons">chevron_left</i></button>
+		<span>{{yearPicker ? month.format("MMM") : month.format("MMM YYYY")}}</span>
+		<button type="button" class="chevron-button" (click)="next()"><i class="material-icons">chevron_right</i></button>
+	</div>
+	<div class="week day-labels">
+		<span class="day abbreviation" *ngFor="let dayLabel of dayLabels">
+			<b>{{dayLabel}}</b>
+		</span>
+	</div>
+	<div class="week" *ngFor="let week of weeks">
+		<span class="day" [ngClass]="{ 'today': day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isInWeek(day.date),
+			'disabled' : day.disabled }" (click)="daySelect(day)" *ngFor="let day of week.days"  dnd-draggable
+			[dragEnabled]="canDrag(day.date)" [dragData]="day" [dropZones]="setDragDropZones(day)"
+			[attr.side]="getHighlight(day.date)" (mouseenter)="setHoverDate(day.date)">
+			<span dnd-droppable (onDropSuccess)="droppedDay(day,$event.dragData)" [dropZones]="setDropZones(day.date)">
+				{{day.numb}}
+			</span>
+		</span>
+	</div>
+</div>

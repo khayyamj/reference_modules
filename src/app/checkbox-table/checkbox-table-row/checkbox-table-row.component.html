@@ -1,0 +1,33 @@
+<div fxLayout="row">
+	<div [class.align-center]="column.type==='number'" class="cell" *ngFor="let column of columns" [fxFlex]="column.columnWidth > 0 ? column.columnWidth + '%' : ''" [style.min-width]="column.columnWidth > 0 ? column.columnWidth + '%' : '120px'" fxFlexAlign="center">
+		<div class="cell-content " [class.bold]="column.isBold" [ngSwitch]="isColumnType(column)" (click)="setToEditable(column, input)">
+			<span *ngSwitchDefault>
+				<span *ngIf="row[column.attr + 'Link']; else noLink">
+					<a href="{{row[column.attr + 'Link']}}"><span [innerHtml]="row[column.attr]"></span></a>
+				</span>
+				<ng-template #noLink>
+					<div [innerHtml]="row[column.attr]" [class.multi-row-wrap]="column.showTwoLines" class="normal-cell"></div>
+				</ng-template>
+			</span>
+			<span *ngSwitchCase="'mtcDate'">{{row[column.attr] | mtcDate}}</span>
+			<span *ngSwitchCase="'telephone'">{{row[column.attr] | telephone}}</span>
+			<span *ngSwitchCase="'yesNo'">{{row[column.attr]  | yesNo}}</span>
+			<span *ngSwitchCase="'isIcon'">
+				<i class="material-icons" (click)="iconFunction(row,column)" [style.color]="getIconColor(column, row, i + column.icon)" (mouseenter)="hoveredIcon = i + column.icon" (mouseleave)="hoveredIcon = null">{{column.icon}}</i>
+			</span>
+			<span *ngSwitchCase="'editing'">
+				<div (clickOutside)="save(column,row[column.attr],row)">
+					<mat-input-container>
+						<input matInput autofocus [attr.type]="column.type" autocomplete="off" [(ngModel)]="row[column.attr]" #input>
+					</mat-input-container>
+				</div>
+			</span>
+			<span *ngSwitchCase="'isArray'">
+				<span *ngFor="let item of row[column.attr]; let j = index" matTooltip="{{item[column.isArray.tooltip]}}">
+					{{item[column.isArray.displayBy]}}
+					<span *ngIf="j < row[column.attr].length - 1">, </span>
+				</span>
+			</span>
+		</div>
+	</div>
+</div>

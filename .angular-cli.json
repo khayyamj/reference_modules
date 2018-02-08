@@ -1,0 +1,61 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"project": {
+		"name": "mtc-modules"
+	},
+	"apps": [
+		{
+		"root": "src",
+		"outDir": "dist",
+		"assets": [
+			"assets",
+			"favicon.ico"
+		],
+		"index": "index.html",
+		"main": "main.ts",
+		"polyfills": "polyfills.ts",
+		"test": "test.ts",
+		"tsconfig": "tsconfig.app.json",
+		"prefix": "app",
+		"styles": [
+			"styles.less",
+			"imports.css",
+			"app/mtc-auth/mtc-auth2.js",
+			"assets/authconfigure.js"
+		],
+		"scripts": [],
+		"environmentSource": "environments/environment.ts",
+		"environments": {
+				"dev": "environments/environment.ts",
+				"prod": "environments/environment.prod.ts"
+			}
+		}
+	],
+	"e2e": {
+		"protractor": {
+			"config": "./protractor.conf.js"
+		}
+	},
+  	"lint": [
+		{
+			"project": "src/tsconfig.app.json"
+		},
+		{
+			"project": "src/tsconfig.spec.json"
+		},
+		{
+			"project": "e2e/tsconfig.e2e.json"
+		}
+	],
+	"test": {
+		"karma": {
+			"config": "./karma.conf.js"
+		}
+	},
+	"defaults": {
+		"styleExt": "less",
+		"build": {
+			"showCircularDependencies": false
+		}
+	}
+}

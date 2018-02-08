@@ -1,0 +1,11 @@
+<div class="time-picker">
+	<mat-input-container>
+		<input matInput class="time-display" [placeholder]="title" [formControl]="childControl">
+		<i class="material-icons icon no-text-selection" matSuffix (click)="toggleOpen()">access_time</i>
+		<mat-error *ngIf="childControl.errors?.required">Required Field</mat-error>
+		<mat-error *ngIf="childControl.errors?.invalidInput">Invalid Time</mat-error> 
+	</mat-input-container>
+	<mat-card class="mini-clock-float no-text-selection" [class.drop-up]="dropUp" *ngIf="showClock">
+		<mtc-clock-picker [time]="time" (changeTime)="setTime($event)" (offPage)="dropUp = $event" [autoSwitch]="autoSwitch" (clickOutside)="showClock = false"></mtc-clock-picker>
+	</mat-card>
+</div>

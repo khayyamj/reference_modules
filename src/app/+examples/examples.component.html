@@ -1,0 +1,143 @@
+<div>
+	<h2>Storage</h2>
+	<mtc-file (onFileSelected)="fileSelected($event)" [name]="'Thumbnail Image'" [preview]="true"></mtc-file>
+	<mtc-file (onFileSelected)="fileSelected($event)" [name]="'Image'" [preview]="false"></mtc-file>
+</div>
+
+<div>
+	<h2>Time Picker</h2>
+	<mtc-time-picker [(time)]="time" [title]="timeTitle" [autoSwitch]="false" [required]="true"></mtc-time-picker>
+</div>
+<div>
+	<h2>Date Picker w/o year picker</h2>
+	<mtc-date-picker [(date)]="date" [title]="'DATE'"></mtc-date-picker>
+</div>
+
+<div>
+	<h2>Date Picker w/ year picker</h2>
+	<mtc-date-picker [(date)]="date" [title]="'DATE'" [yearPicker]="true"></mtc-date-picker>
+</div>
+
+<div>
+	<h2>Range Date Picker</h2>
+	<mtc-date-picker [(date)]="date" [(endDate)]="endDate" [title]="'DATE'"></mtc-date-picker>
+</div>
+
+<div>
+	<h2>Week Picker</h2>
+	<mtc-days-picker [isAfter]="sunday" [date]="monday"></mtc-days-picker>
+</div>
+<div>
+	<h2>Day Picker</h2>
+	<mtc-days-picker [isAfter]="sunday" [date]="monday" [isDay]="true"></mtc-days-picker>
+</div>
+
+<div>
+	<h2>Switch</h2>
+	<mtc-switch [model]="switch" (changedSwitch)="switch = $event"></mtc-switch>
+</div>
+<div>
+	<h2>Environment</h2>
+	<mat-checkbox [checked]="includeVersion" (change)="includeVersion = !includeVersion" align="end">
+		Toggle version number in MTC-Env
+	</mat-checkbox>
+</div>
+
+<div>
+	<h2>Dialog</h2>
+	<button mat-raised-button (click)="openSimpleConfirmation()" color="primary">Open Simple Confirmation</button>
+	<h5 *ngIf="likesSimpleConfirmation && hasOpenedSimple">You liked Simple Confirmation!</h5>
+	<h5 *ngIf="!likesSimpleConfirmation && hasOpenedSimple">Why you no like? :-(</h5>
+</div>
+
+<div>
+	<h2>MTC-Toast</h2>
+	<div layout="row">
+		<form flex="10">
+			Location<br>
+			<input type="radio" name="location" (click)="toastLocation='top right'">Top Right<br>
+			<input type="radio" name="location" (click)="toastLocation='top left'">Top Left<br>
+			<input type="radio" name="location" (click)="toastLocation='bottom right'">Bottom Right<br>
+			<input type="radio" name="location" (click)="toastLocation='bottom left'">Bottom Left<br>
+		</form>
+		<form>
+			Type<br>
+			<input type="radio" name="type" (click)="toastType='success'">Success<br>
+			<input type="radio" name="type" (click)="toastType='warning'">Warning<br>
+			<input type="radio" name="type" (click)="toastType='error'">Error<br>
+			<input type="radio" name="type" (click)="toastType='info'">Info<br>
+		</form>
+	</div><br>
+	<button mat-raised-button (click)="openMTCToast()" color="primary">Open Toast</button>
+	<button mat-raised-button (click)="clearMTCToasts()" color="primary">Clear Toasts</button>
+</div>
+
+<div>
+	<h2>ClickOutside</h2>
+	<button mat-raised-button (click)="openClickOutsideOverlay($event)" color="primary">Toggle Overlay</button>
+	<div class="overlay" *ngIf="overlayOpen" (clickOutside)="closeClickOutsideOverlay()">
+		Click anywhere outside of this window to close
+	</div>
+</div>
+
+<div>
+	<h2>Auto Complete</h2>
+	<fieldset>
+		<legend>Pick Someone (Zack, Tyler, Bryan, Blaine, Amy, Michel, Chase, Janessa, Michael, Niles, Andrew, Kaden)</legend>
+		<mtc-auto-complete placeholder="Choose Person" [(itemChosen)]="chosen" [items]="items" [displayBy]="'name'"></mtc-auto-complete>
+	</fieldset>
+	<h5>Chosen Person: {{chosen?.name}}</h5>
+</div>
+
+<button (click)="itemChange('')">reset</button>
+
+<div>
+	<h2>Auto Complete (Multi-Select)</h2>
+	<fieldset>
+		<legend>Pick People (Zack, Tyler, Bryan, Blaine, Amy, Michel, Chase, Janessa, Michael, Niles, Andrew, Kaden)</legend>
+		<mtc-multi-auto-complete [(itemChosen)]="chosenMulti" [items]="items" [displayBy]="'name'"></mtc-multi-auto-complete>
+	</fieldset>
+	<h5>Chosen People:</h5>
+	<div *ngFor="let person of chosenMulti">
+		{{person?.name}}
+	</div>
+</div>
+<button (click)="itemChangeMulti([])">reset</button>
+
+<div>
+	<input [(ngModel)]="number">
+	<div>{{number | telephone}}</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+<div>
+	<h2>Auto Complete (Multi-Select Partial)</h2>
+	<fieldset>
+		<legend>Pick People (Zack, Tyler, Bryan, Blaine, Amy, Michel, Chase, Janessa, Michael, Niles, Andrew, Kaden)</legend>
+		<mtc-multi-auto-complete [(itemChosen)]="chosenMulti" [partial]="true" [items]="items" [displayBy]="'name'" [placeholder]="'People'"></mtc-multi-auto-complete>
+	</fieldset>
+	<h5>Chosen People:</h5>
+	<div *ngFor="let person of chosenMulti">
+		{{person?.name}}
+	</div>
+</div>
+<button (click)="itemChangeMulti([])">reset</button>
+
+<div>
+	<input [(ngModel)]="number">
+	<div>{{number | telephone}}</div>
+</div>
+<br>
+<div class="checkbox-table-container">
+	<mtc-checkbox-table [columns]="columns" [rows]="rows" [config]="checkboxTableConfig"></mtc-checkbox-table>
+</div>
+<br>
+<br>
+<br>
+<mtc-env [includeVersion]="includeVersion"></mtc-env>
+<mtc-layout></mtc-layout>
+<mtc-dialog></mtc-dialog>
+<mtc-toast></mtc-toast>

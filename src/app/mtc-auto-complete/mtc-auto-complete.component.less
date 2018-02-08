@@ -1,0 +1,21 @@
+@import '../../styles.less';
+
+.mtc-auto-complete {
+	position: relative;
+	font-size: 14px;
+	.mtc-autocomplete-input-container{
+		display: block;
+    	overflow: hidden;
+		mat-input-container{
+			display: block;
+			input {
+				border: none !important;
+				color:@black;
+			}
+			.mtc-autocomplete-input {
+				height:16px;
+				line-height: 16px;
+			}
+		}
+	}
+}

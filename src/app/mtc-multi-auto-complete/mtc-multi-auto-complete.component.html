@@ -1,0 +1,25 @@
+<div class="mtc-auto-complete" layout="column">
+	<auto-complete-dropdown *ngIf="showDropDown" [keyPress]="keyPress" [items]="searchResults" [displayBy]="displayBy" (currentItemIndexChange)="chooseItem(searchResults[$event])"
+	 [multiOffSet]="multiOffSet"></auto-complete-dropdown>
+	 <div class="multis" #multis *ngIf="multiChips.length > 0" layout="row" layout-align="start center">
+		 <div class="multi-item" *ngFor="let chip of multiChips; let i = index">
+			 <div class="display-name">
+				 {{chip.display}}
+			 </div>
+			 <span class="remove" (click)="removeItem(chip, i)">
+				 <i class="material-icons">clear</i>
+			 </span>
+		 </div>
+		 <i class="material-icons add" [class.inactive]="!showDropDown" (click)="onAdd()" [class.hide]="multiChips?.length === items?.length">add</i>
+	 </div>
+	 <div class="mtc-autocomplete-input-container" [class.no-another]="multiChips.length && notAnother">
+		 <mat-input-container [floatPlaceholder]="multiChips.length ? 'always' : 'float'" (click)="setFocus(true)">
+			<input matInput autocomplete="off" type="text" class="mtc-autocomplete-input" #input [(ngModel)]="searchText" (keyup)="onKeyUp($event)"
+			 placeholder="{{placeholder}}" (focusout)="setFocus(false)" [formControl]="childControl" [required]="required" [style.height.px]="multiHeight"/>
+			<mat-error>
+				<span [hidden]="!childControl?.errors?.required">Required Field</span>
+				<span [hidden]="!childControl?.errors?.invalidInput">Invalid Input</span>
+			</mat-error>
+		</mat-input-container>
+	</div>
+</div>

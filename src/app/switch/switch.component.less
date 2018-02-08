@@ -1,0 +1,67 @@
+@sidebar-background:#F3F3F3;
+@button-checked:#44B1E4;
+@button-default:#a6a6a6;
+
+.switch-component {
+	padding: 0px;
+	margin: 0px 0px 0px 0px;
+	.switch {
+		background-color: @sidebar-background;
+		position: relative;
+		display: block;
+		width: 100px;
+		height: 25px;
+		font-size: 12px;
+		padding: 0px;
+		border-radius: 18px;
+		cursor: pointer;
+		text-transform: uppercase;
+		font-weight: bolder;
+		&:before {
+			content: "ON";
+			left: 18px;
+			color: @button-checked;
+		}
+		&:after {
+			content: "OFF";
+			right: 18px;
+			color: @button-default;
+		}
+		&:before, &:after {
+			position: absolute;
+			top: 50%;
+			margin-top: -.5em;
+			line-height: 1;
+			transition: inherit;
+		}
+		input {
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0;
+		}
+		.switch-handle {
+			z-index: 1;
+			position: relative;
+			top: 0px;
+			left: 50px;
+			width: 45px;
+			height: 25px;
+			color: white;
+			text-transform: uppercase;
+			background-color: @button-default;
+			border-radius: 18px;
+			transition: All 0.3s ease;
+			.switch-text {
+				line-height: 40px;
+				position: relative;
+				bottom: 6px;
+				left: 12px;
+			}
+		}
+		input:checked ~ .switch-handle {
+			left: 4px;
+			background-color: @button-checked;
+		}
+	}
+}

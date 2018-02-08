@@ -1,0 +1,54 @@
+@import '../../styles.less';
+.date-picker{
+    position: relative;
+    display: inline-block;
+    font-family: 'Open Sans';
+    width: 100%;
+    min-width: 120px;
+
+    .mat-input-container{
+        width: 100%;
+    }
+
+    .disabled {
+        cursor: default;
+    }
+
+    mat-input-invalid.ng-invalid{
+        .icon{
+            color: @action-orange;
+        }
+    }
+
+    .mat-input-container.mat-focused{
+        .icon{
+            color: @accent-blue;
+        }
+    }
+
+    .icon {
+        cursor: pointer;
+        color: @light-grey;
+        vertical-align: bottom;
+        font-size: 20px;
+        opacity: .75;
+    }
+
+    .mini-calendar-float{
+        position: fixed;
+        padding: 0px;
+        z-index: 10;
+        margin-left: 26px;
+
+        :host-context(.mat-dialog-container){
+            .mini-calendar-float{
+                position: fixed;
+            }
+        }
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+}

@@ -1,0 +1,6 @@
+<div class="mtc-dialog-component" layout="column" flex *ngIf="isOpen()">
+	<div class="opaque-div" (click)="cancel()"></div>
+	<div flex layout="row" layout-align="center center">
+		<dynamic-content class="dialog-content" layout="column" [ngStyle]="{'width': getStyle(width)}" [component]="component" ></dynamic-content>
+	</div>
+</div>

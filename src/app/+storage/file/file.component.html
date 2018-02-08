@@ -1,0 +1,16 @@
+<div layout="row" layout-align="space-between start">
+	<div class="label" *ngIf="name">{{name}}</div>
+	<div class="filename" *ngIf="file" layout="row" layout-align="start center">
+		{{file.name}}<md-icon (click)="discard()">close</md-icon>
+	</div>
+	<div class="buttonContainer" *ngIf="!file">
+		<input type="file" (change)="onChange($event)"/>
+		<div class="button" layout="row" layout-align="center center">
+			<span> Upload </span>
+		</div>
+	</div>
+	<div class="preview" *ngIf='preview && file'>
+		<img/>
+	</div>
+</div>
+<mtc-layout></mtc-layout>

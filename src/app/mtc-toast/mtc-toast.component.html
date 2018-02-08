@@ -1,0 +1,18 @@
+<div attr.position="{{location.location}}" class="mtc-toast" *ngFor="let location of toastLocations">
+	<div *ngFor="let toast of location.toasts;">
+		<div layout-align="space-between"  [attr.type]="toast.type" class="mtc-toast-content" flex layout="row">
+			<div layout="row">
+				<i class="material-icons icon" *ngIf="toast.icon">{{toast.icon}}</i>
+				<div layout="column">
+					<div flex *ngIf="toast.title">
+						<h1 class="header">{{toast.title}}</h1>
+					</div>
+					<div flex class="content">
+						<div [innerHtml]="toast.content"></div>
+					</div>
+				</div>
+			</div>
+			<div class="toast-close clickable" (click)="killToast(toast)" *ngIf="toast.canClose">DISMISS</div>
+		</div>
+	</div>
+</div>

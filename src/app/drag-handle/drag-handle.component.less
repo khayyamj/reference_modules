@@ -1,0 +1,16 @@
+@import '../../styles.less';
+
+.drag-handle{
+	width: 10px;
+	font-size: inherit;
+	height: inherit;
+	color: @light-grey;
+	.vert{
+		letter-spacing: -11px;
+		&:hover{
+			color: @charcoal;
+			cursor: grab;
+			cursor: -webkit-grab;
+		}
+	}
+}

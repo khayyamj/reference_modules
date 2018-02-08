@@ -1,0 +1,23 @@
+<div class="modal">
+	<div class="modal-header" fxLayoutAlign="space-between">
+		<h2 mat-dialog-title>{{dataInput.title | uppercase}}</h2>
+		<button class="icon-btn" (click)="cancel()">
+			<i class="material-icons">clear</i>
+		</button>
+	</div>
+	<div class="simple-confirmation-content" mat-dialog-content fxLayoutAlign="center center">
+		<div class="center" fxLayout="row" fxLayoutAlign="center center">
+			<span class="body-text" [innerHTML]="dataInput.content"></span>
+		</div>
+	</div>
+	<div class="modal-buttons" mat-dialog-actions>
+		<div fxLayout="row" fxLayoutAlign="center center">
+			<button (click)="cancel()" class="secondary-btn" *ngIf="dataInput.cancelButtonText">
+				{{dataInput.cancelButtonText | uppercase}}
+			</button>
+			<button class="primary-btn" (click)="remove()" *ngIf="dataInput.confirmationButtonText">
+				{{dataInput.confirmationButtonText | uppercase}}
+			</button>
+		</div>
+	</div>
+</div>

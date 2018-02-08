@@ -1,0 +1,80 @@
+<div class="checkbox-table-container" #checkboxTable>
+	<div class="top-components-row noselect" fxLayout="row" fxLayoutAlign="space-between end">
+		<span *ngIf="config.resultsCountName" class="resultCount" fxLayoutAlign="start center">
+			{{rows.length}} {{rows.length === 1 ? (config.resultsCountName.singular || 'Item') : (config.resultsCountName.plural || 'Items')}}
+		</span>
+		<div [class.top-buttons-row]="!config.resultsCountName">
+			<div class="export-button" fxLayoutAlign="end center" *ngIf="config.export">
+				<button class="primary-btn" (click)="export()">
+					<a #downloadResults href="csv" download="download.csv">Export</a>
+				</button>
+			</div>
+			<div class="top-buttons-container" *ngIf="config.topButtons">
+				<span *ngFor="let button of config.topButtons">
+					<button *ngIf="showTableButton(button)" class="flat-btn" (click)="topButtonClick(button)">{{button.text}}</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="header-row noselect" fxLayout="row" [style.height.px]="config.headerHeight" fxLayoutAlign="start center">
+		<div class="check-box-container" *ngIf="config.topButtons" fxFlex="0 0 36px" fxLayout="row" fxLayoutAlign="end center">
+			<mat-checkbox class="checkbox" (change)="selectAll()" [checked]="allSelected"></mat-checkbox>
+		</div>
+		<div class="headers" [class.no-checkbox]="!config.topButtons" fxLayout="row" fxLayoutAlign="start center" #headerDiv>
+			<div *ngIf="_fixedColumns.length" class="fixed-title-row" [class.border]="columns.length" fxLayout="row" [fxFlex]="'0 0 ' + fixedColumnsWidth +'%'">
+				<div [class.align-center]="column.type==='number'" fxLayout="row" class="header-cell" (click)="sortByColumn(column)" [fxFlex]="column.columnWidth > 0 ? column.columnWidth + '%' : ''"
+					[style.min-width]="column.columnWidth > 0 ? column.columnWidth + '%' : '120px'" fxFlexAlign="center" *ngFor="let column of _fixedColumns">
+					<div class="cell-content">{{column.title}}</div>
+					<div class="sort-icon" *ngIf="column.sortAsc !== null && column.sortAsc !== undefined">
+						<i class="material-icons">arrow_drop_{{column.sortAsc ? 'down' : 'up'}}</i>
+					</div>
+				</div>
+			</div>
+			<div class="moving-title-row" fxFlex="" [style.max-width.%]="100-fixedColumnsWidth-getButtonsWidth()">
+				<div class="scrollable-div" [class.spacer]="_fixedColumns.length" fxLayout="row" [style.transform]="scrollableColumnTransform" #scrollingDiv>
+					<div [class.align-center]="column.type==='number'" fxLayout="row" class="header-cell cell" (click)="sortByColumn(column)" [fxFlex]="column.columnWidth > 0 ? column.columnWidth + '%' : ''"
+						[style.min-width.%]="column.columnWidth" fxFlexAlign="center" *ngFor="let column of _columns; let c = index">
+						<div class="cell-content">{{column.title}}</div>
+						<div class="sort-icon" *ngIf="column.sortAsc !== null && column.sortAsc !== undefined">
+							<i class="material-icons">arrow_drop_{{column.sortAsc ? 'down' : 'up'}}</i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="columns.length" class="scrolling-arrows" [fxFlex]="'0 0 ' + getButtonsWidth() + '%'">
+				<div class="arrow-container" fxLayoutAlign="end center">
+					<i class="material-icons" (click)="setScroll('left')" [class.active]="scroll != 0">chevron_left</i>
+					<i class="material-icons" (click)="setScroll('right')" [class.active]="scroll !== frameCount">chevron_right</i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="data-rows" [class.noselect]="shiftPressed" [ngStyle]="{'max-height': 'calc(100% - '+getTopComponentsSize()+'px)'}" [style.min-height.px]="config.rowHeight" #tableData (scroll)="setVirtualScroll()">
+		<div class="full-row" [class.highlight]="hoverState" *ngFor="let row of rows; let i = index" [class.checked]="row.selected" [style.height.px]="config.rowHeight" fxLayout="row" fxLayoutAlign="start center" (click)="clickRow(i, $event)">
+			<div class="check-box" *ngIf="config.topButtons && (i >= topRowIndex - 2 && i <= bottomRowIndex + 2) " fxFlex="0 0 36px" fxLayoutAlign="end center">
+				<mat-checkbox class="checkbox" (click)="clickRow(i, $event)" [checked]="row.selected"></mat-checkbox>
+			</div>
+			<div *ngIf="i >= topRowIndex - 2 && i <= bottomRowIndex + 2" class="row-data" [class.no-checkbox]="!config.topButtons" fxLayout="row" fxLayoutAlign="start center">
+				<div *ngIf="_fixedColumns.length" [class.fixed-data-row-padding]="columns.length" fxLayout="row" [fxFlex]="'0 0 ' + fixedColumnsWidth +'%'">
+					<app-checkbox-table-row [row]="row" [columns] = "_fixedColumns"></app-checkbox-table-row>
+				</div>
+				<div class="moving-data-row" *ngIf="_columns.length" [style.max-width.%]="100-fixedColumnsWidth-getButtonsWidth()">
+					<div class="scrollable-div" [class.spacer]="_fixedColumns.length" fxLayout="row" [style.transform]="scrollableColumnTransform">
+						<app-checkbox-table-row [row]="row" [columns] = "columns"></app-checkbox-table-row>
+					</div>
+				</div>
+				<div class="row-buttons" fxLayoutAlign="space-around center" [fxFlex]="'0 0 ' + getButtonsWidth() + '%'">
+					<div class="buttons" [class.icon]="button.icon" [class.hidden]="shouldIconHide(button)" *ngFor="let button of config.rowButtons" (click)="handleClick(button,row,$event)">
+						<button *ngIf="!button.icon; else icon" class="flat-btn">{{button.text}}</button>
+						<ng-template #icon>
+							<i class="material-icons" [style.color]="getIconColor(button, row, i + button.icon)" (mouseenter)="hoveredIcon = i + button.icon" (mouseleave)="hoveredIcon = null">{{button.icon}}</i>
+						</ng-template>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div *ngIf="rows.length === 0" class="placeholder-position">
+				{{config.placeholder || placeholder}}
+			</div>
+		</div>
+	</div>

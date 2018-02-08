@@ -1,0 +1,108 @@
+@import '../../styles.less';
+
+.mtc-auto-complete {
+	position: relative;
+	font-size: 14px;
+
+	.no-another {
+		min-height: 50px;
+		margin:2px 0px;
+	}
+
+	.mtc-autocomplete-input-container {
+		display: block;
+		overflow: hidden;
+		mat-input-container{
+			display: block;
+
+			input {
+				border: none !important;
+				color: @black;
+				vertical-align: baseline;
+				line-height: 16px;
+			}
+		}
+	}
+
+	.multis{
+		flex-wrap: wrap;
+		max-height: 130px;
+		overflow-y: auto;
+		position: absolute;
+		bottom: 28px;
+		z-index: 1;
+
+		&::-webkit-scrollbar
+		{
+			width: 8px;
+			background-color: @off-white;
+		}
+
+		&::-webkit-scrollbar-thumb
+		{
+			border-radius: 10px;
+			background-color: rgba(0,0,0,.5);
+		}
+		.multi-item{
+			display:inline-flex;
+			align-items: center;
+			background-color: @off-white;
+			color: @charcoal;
+			padding:0px 2px;
+			border-radius:3px;
+			border: 1px solid @light-grey;
+			max-width: 85%;
+			overflow-x: hidden;
+			white-space: nowrap;
+			height: 19px;
+			margin-top: 2px;
+			overflow-y: hidden;
+			.display-name {
+				text-overflow: ellipsis;
+				overflow: hidden;
+				flex-shrink: 1;
+			}
+			.remove{
+				display: inherit;
+				margin-top: 3px;
+				cursor:pointer;
+				-webkit-transition: color 0.5s; /* Safari */
+				transition: color 0.5s;
+				flex-grow: 1;
+				&:hover{
+					color: @black;
+					-webkit-transition: color 0.5s; /* Safari */
+					transition: color 0.5s;
+				}
+				i{
+					font-size:12px !important;
+				}
+			}
+		}
+		.hide {
+			display: none;
+		}
+
+		.add{
+			position: absolute;
+			width: 0px;
+			right: 25px;
+			bottom: 1px;
+			color:@accent-blue;
+			font-size: 18px;
+
+			&:hover{
+				cursor: pointer;
+			}
+
+			&.inactive{
+				color:@light-grey;
+			}
+		}
+
+		.multi-item:nth-last-child(2){
+			margin-right: 24px;
+			max-width: calc(~"100% - 30px");
+		}
+	}
+}

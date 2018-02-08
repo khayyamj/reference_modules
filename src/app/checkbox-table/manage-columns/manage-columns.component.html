@@ -1,0 +1,26 @@
+<div class="modal">
+	<div class="modal-header" fxLayout="row" fxLayoutAlign="space-between">
+		<h2 class="mat-dialog-title">Manage Columns</h2>
+		<button class="icon-btn" (click)="dialog.close()">
+			<i class="material-icons">clear</i>
+		</button>
+	</div>
+	<div mat-dialog-content fxLayout="column" class="no-text-selection">
+		<div class="header">COLUMNS</div>
+		<span class="options" dnd-sortable-container [sortableData]="columns">
+			<div *ngFor="let column of columns; let i = index;" dnd-draggable [dragData]="column" dnd-sortable [sortableIndex]="i">
+				<div class="option"  fxLayout="row" fxLayoutAlign="space-between start" dnd-droppable (onDropSuccess)="onItemDrop($event.dragData,i)">
+					<mtc-drag-handle></mtc-drag-handle>
+					<span class="column-name" fxFlex="">{{ column.title }}</span>
+					<i class="material-icons column-setting" [class.active]="column.visible" fxFlex="5%" (click)="change('visible',column)">remove_red_eye</i>
+					<i class="material-icons column-setting lock-icon" [class.active]="column.fixed" fxFlex="7%" (click)="change('fixed',column)">lock</i>
+				</div>
+			</div>
+		</span>
+		<mat-checkbox *ngIf="showSaveCheckbox" [(ngModel)]="saveAsDefault" class="save-as-default">Save As Default</mat-checkbox>
+	</div>
+	<div class="modal-buttons" mat-dialog-actions>
+		<button class="secondary-btn" (click)="dialog.close()">Cancel</button>
+		<button class="primary-btn" (click)="save()">Save</button>
+	</div>
+</div>

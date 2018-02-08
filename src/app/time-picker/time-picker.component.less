@@ -1,0 +1,57 @@
+@import '../../styles.less';
+
+.time-picker{
+	position: relative;
+	display: inline-block;
+	font-family: 'Open Sans';
+	width: 95%;
+	max-width: 185px;
+	min-width: 120px;
+
+	mat-input-container{
+		width:100%;
+	}
+
+	.mat-input-container.mat-focused{
+		.icon{
+			color: @accent-blue;
+		}
+	}
+
+	.icon {
+		cursor: pointer;
+		color: @light-grey;
+		vertical-align: bottom;
+		font-size: 20px;
+		opacity: .75;
+
+		&:hover{
+			color: @charcoal;
+			opacity: 1;
+		}
+	}
+
+	.mat-input-invalid.ng-invalid{
+		.icon{
+			color: @red;
+		}
+	}
+
+	.mini-clock-float{
+		position: absolute;
+		padding: 0px;
+		margin-left: 0px;
+		z-index: 1000;
+		:host-context(.mat-dialog-container){
+			.mini-clock-float{
+				position: fixed;
+			}
+		}
+		&:focus{
+			outline: none;
+		}
+		&.drop-up {
+			margin-top: -350px;
+		}
+	}
+}

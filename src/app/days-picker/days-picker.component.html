@@ -1,0 +1,17 @@
+<div class="week-picker no-text-selection" (clickOutside)="showCalendar = false" fxLayout="column" #daysPicker>
+	<div fxLayout="row">
+		<div class="calendar-popup" (click)="showCalendar = !showCalendar">
+			<i class="material-icons">event</i>
+		</div>
+		<div class="arrow-picker" (click)="clickArrow('subtract')" [class.hidden]="isAfter && isAfter.isSameOrAfter(startDate)">
+			<i class="material-icons">chevron_left</i>
+		</div>
+		<div class="view-date">{{startDate | mtcDate: endDate }}</div>
+		<div class="arrow-picker" (click)="clickArrow('add')" [class.hidden]="isBefore && isBefore.isSameOrBefore(endDate || startDate)">
+			<i class="material-icons">chevron_right</i>
+		</div>
+	</div>
+	<mat-card class="mini-calendar-float mat-card" *ngIf="showCalendar" [style.top.px]="setOffPage()">
+		<mini-calendar [isAfter]="isAfter" [showWeek]="!isDay" [firstDate]="startDate" (changeFirstDate)="emitDate(startDate = $event.startOf(type))" (clickOutside)="showCalendar = false"></mini-calendar>
+	</mat-card>
+</div>

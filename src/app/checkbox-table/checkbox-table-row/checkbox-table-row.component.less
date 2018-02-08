@@ -1,0 +1,51 @@
+@import '../../../styles.less';
+
+:host{
+	width: 100%;
+}
+
+.align-center{
+	justify-content: center;
+	text-align: center;
+	.mat-input-element{
+		text-align: center;
+	}
+}
+
+.mat-input-container{
+	padding-top: 7px;
+	font-family: 'Open Sans';
+	font-weight: 600;
+}
+
+.cell-content{
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
+	padding-right: 20px;
+	min-height: 22px;
+
+	&.bold{
+		font-weight: bold;
+	}
+
+	.normal-cell{
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.multi-row-wrap{
+		white-space: normal;
+		max-height: 46px;
+	}
+
+	a{ // TODO remove this element styling when the main.less file is updated
+		cursor: pointer;
+		color: @accent-blue;
+		text-decoration: none;
+
+		:hover{
+			text-decoration: underline;
+		}
+	} // to here
+}

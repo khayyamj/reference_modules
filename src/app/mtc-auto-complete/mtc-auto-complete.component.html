@@ -1,0 +1,19 @@
+<div class="mtc-auto-complete">
+	<span class="mtc-autocomplete-input-container">
+		<mat-input-container (click)="setFocus(true)">
+			<input matInput autocomplete="off" type="text" class="mtc-autocomplete-input"
+				[(ngModel)]="searchText"
+				(keyup)="onKeyUp($event)"
+				placeholder="{{placeholder}}"
+				(focusout)="setFocus(false)"
+				[formControl]="childControl"
+				[required]="required"/>
+			<mat-error>
+				<span [hidden]="!childControl?.errors?.required">Required Field</span>
+				<span [hidden]="!childControl?.errors?.invalidInput">Invalid Input</span>
+			</mat-error>
+		</mat-input-container>
+	</span>
+	<auto-complete-dropdown *ngIf="showDropDown && searchResults.length > 0" [keyPress]="keyPress"
+			[items]="searchResults" [displayBy]="displayBy" (currentItemIndexChange)="chooseItem(searchResults[$event])"></auto-complete-dropdown>
+</div>

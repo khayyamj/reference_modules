@@ -1,0 +1,15 @@
+<div class="date-picker" [class.range]="range" #datePicker>
+	<mat-input-container (click)="toggleCalendar()" [class.disabled]="disabled" (mouseenter)="hover=true" (mouseleave)="hover=false">
+		<input matInput [readonly]="isReadOnly()" type="text" class="clickable noselect" [class.error]="error" [(ngModel)]="displayDate"
+		 [placeholder]="title" [formControl]="childControl" (keyup.enter)="changeDisplayDate()" [required]="required">
+		<i class="material-icons icon" [class.hover]="hover" matSuffix>{{range ? 'date_range' : 'event'}}</i>
+		<mat-error>
+			<span>Required Field</span>
+		</mat-error>
+	</mat-input-container>
+	<mat-card class="mini-calendar-float" *ngIf="showCalendar" [style.top.px]="setOffPage()">
+		<mini-calendar [showWeek]="showWeek" [isAfter]="isAfter" [isBefore]="isBefore" [setDisabled]="setDisabled" [firstDate]="date"
+		 [secondDate]="endDate" [range]="range" (offPage)="offPage = $event" [yearPicker]="yearPicker" (changeFirstDate)="changeFirstDate($event)"
+		 (changeSecondDate)="changeSecondDate($event)" (clickOutside)="showCalendar = false"></mini-calendar>
+	</mat-card>
+</div>

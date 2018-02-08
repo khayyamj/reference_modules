@@ -1,0 +1,9 @@
+<div class="switch-component">
+	<label class="switch">
+		<input type="checkbox" [ngModel]="model" (ngModelChange)="onChange($event)"/>
+		<div class="switch-handle">
+			<span class="switch-text" *ngIf="model">ON</span>
+			<span class="switch-text" *ngIf="!model">OFF</span>
+		</div>
+	</label>
+</div>
