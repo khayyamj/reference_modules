@@ -8,14 +8,6 @@ This module provides a component which displays environment and version info abo
 ng serve
 ```
 
-### Setup
-
-Install `mtc-modules` into your project with npm:
-
-```shell
-npm install --save git+ssh://git@bitbucket.mtc.byu.edu/amod/mtc-modules.git
-```
-
 In your `app.module.ts` file (i.e. the root module of your application) import the `MTCCoreModule` and `MTCCommonModule` like so:
 
 ```javascript
@@ -401,7 +393,7 @@ onImageFileSelected(file) {
 		{
 			extension: ".jpg",
 			mimeType: "image/jpeg",
-			sha1: "kBWpRHvSHhQfS33jpQaZXNB0JhI=",
+			sha1: "kBdqWE5vSHhQfS33jpQaZXNB0JhI=",
 			url: "https://cdn.mtc.byu.edu/storage/5ad9e458-a4f9-4252-b6aa-b6be8305762f/dev/e53b3810-2856-4e26-b7ab-4867420491c2.jpg"
 		}
 		**/
@@ -501,25 +493,6 @@ sendTextToSprintCustomers() {
 
 //...
 ```
-
-# MTC Auth 2
-
-### Setup
-
-You must also include the MTC Auth service in your application. This can be done in one of two ways.
-
-1) copy ./src/mtc-auth.js into the public folder of your project. Then insert
-```html
-	<script src="mtc-auth.js"></script>
-```
-into the body tag of your index.html
-
-2) Paste the following script tag into the body of your index.html
-```html
-	<script src="https://apps.mtc.byu.edu/auth/mtc-auth2.js"></script>
-```
-
-
 ### Configure
 
 You will then need to create a new javascript file in your public file. There is an example of a possible file in the examples folder. But it should look something like this.
@@ -546,118 +519,3 @@ The following are the currently available options for the configuration object:
 * **redirectUri**: The URL you want auth to take the user back to after authentication. If you just want the user to go back to where they started, set this as `true`.
 * **options**: A map of additional key/value pairs to include on the request to auth. See "BYU Sign In" for more info.
 * **newTabRedirectUri**: In order to use this we recommend you take the iframeRefresh.html file and place it in your public folder. This parameter can be set to true if you are using hash routing or it can be set to the baseurl/iframeRefresh.html. You will have to register a new redirectURI for your app. That looks like baseurl/iframeRefresh.html e.g. https://test-apps.mtc.byu.edu/arc/iframeRefresh.html
-
-##### BYU Sign In
-
-If your app needs BYU authentication in addition to LDS Account, you can add the following block to the config:
-
-* **requestAuths**: A string to request additional authentication. Allowed values are:
-	* **byulogin**: Require a user to sign in to BYU every time they visit your app in addition to LDS Account.
-	* **byurequired**: This option ensures a user has bound their BYU account to their LDS account by making sure they sign in to BYU at least once if they never have, otherwise signing in to BYU isn't necessary.
-	* **byu**: The option to sign in to BYU is given to the user, but they have the option to reject it.
-
-```javascript
-options: {
-	requestAuths: 'byurequired'
-}
-```
-
-***Note:** We now watch for an expiring token and in the last 5 minutes of the token it will refresh the token behind the scene. After the token has expired it will reauthenticate when the user interacts with the page immediately. instead of waiting for a refresh.
-* Watch for expiring token and refresh before it expires. (decide on this part later)
-
-
-### Log Out
-
-To log out, simply create a function which calls `MTCAuth`'s logout method:
-
-```javascript
-logout() {
-	MTCAuth.logout();
-}
-```
-
-Next, inject the various services you'll be using into your constructor, like so:
-
-```javascript
-constructor(private userService: MTCUser) {}
-```
-
-
-### MTC User
-
-Immediately following the authentication `if` statement, simply add the following code to get the user after the app is authenticated, as is shown below:
-
-```javascript
-if(!this.auth.isAuthenticated()) {
-	this.auth.authenticate();
-}
-this.userService.getUser().subscribe((user) => {
-	// Do something with `user`
-});
-```
-
-That will go get the info on the user from Auth's `tokeninfo` endpoint using the currently logged in user's `accessToken`. This returns an object of type `MTCAuthUser`, which is importable from the `mtc-auth2` library. (shown above)
-
-There is also a `hasRole()` method you can access. This returns a `boolean` as to whether or not the user has that role. Make sure before running that method, you run `getUser()` to ensure the user is defined.
-
-```javascript
-this.userService.getUser().subscribe(() => {
-	let isDeveloper = this.userService.hasRole('developer');
-});
-```
-
-### MTC Http
-
-Wherever you need to use the http service in your app, simply declare it in your constructor:
-
-```javascript
-constructor(private http: MTCHttp) {}
-```
-
-You can then use it like so:
-
-```javascript
-this.http.get(ENDPOINT_URL).subscribe((response) => {
-    let data = response.json();
-	// Do something with `data`.  The json function needs to be called if you want the data to be a java object.
-});
-```
-
-The supported methods are `get()`, `put()`, `post()`, and `delete()`.
-During authentication the http service will keep track of all requests and make them again after the token has been refreshed. If a request comes back as unauthorized the application will refresh its token several times and remake the request in an attempt to authorize the request.
-
-**NOTE:** You must subscribe to the observer returned from the http request or the call will not go through.
-
-
-### MTC URL
-
-You will need to provide the MTCURL once for your application you can register a set of urls like so:
-
-```javascript
-this.urlProvider.provideUrls('{{urlId}}', {
-	dev: 'http://devapplications.mtc.byu.edu/standards/v1',
-	test: 'http://testapplications.mtc.byu.edu/standards/v1',
-	stage: 'http://stageapplications.mtc.byu.edu/standards/v1',
-	beta: 'http://betaapplications.mtc.byu.edu/standards/v1',
-	prod: 'http://app.mtc.byu.edu/standards/v1',
-	support:'http://devapplications.mtc.byu.edu/standards/v1'
-});
-```
-
-All keys are required.
-**NOTE:** It is also required that the url ends with a character besides a '/'; This is to avoid confusion when using the service
-
-
-To retrieve a prefix you simply call:
-
-```javascript
-this.urlProvider.getPrefix('{{urlId}}');
-```
-
-This will return the url that was registered to the given urlId. Currently there are no requirements on urlId's.
-But if they are registered more than once the last registration will be the one to take effect.
-
-
-The last method is getEnvironment. It returns a string prefix associated with the hostname that the script is currently running on.
-
-
